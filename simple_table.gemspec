@@ -11,5 +11,5 @@ Gem::Specification.new do |s|
   s.platform     = Gem::Platform::RUBY
   s.require_path = 'lib'
   s.rubyforge_project = '[none]'
-  s.add_dependency 'active_support', '~> 3.0.0.beta4'
+  s.add_dependency 'activesupport', '~> 3.0.0.beta4'
 end
