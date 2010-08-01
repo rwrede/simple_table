@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name         = "simple_table"
-  s.version      = '0.0.2'
+  s.version      = '0.0.3'
   s.authors      = ["Sven Fuchs", "Raphaela Wrede"]
   s.email        = "raphaela.wrede@gmail.com"
   s.homepage     = "http://github.com/rwrede/simple_table"
