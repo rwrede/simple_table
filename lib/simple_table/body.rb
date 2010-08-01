@@ -2,9 +2,6 @@ module SimpleTable
   class Body < Rows
     self.tag_name = :tbody
 
-    include ActionController::RecordIdentifier
-    include ActionView::Helpers::RecordIdentificationHelper
-
     def row(options = {}, &block)
       table.collection.each_with_index do |record, ix|
         super(record, options_for_record(record, ix, options))

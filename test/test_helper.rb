@@ -2,13 +2,7 @@ $: << File.dirname(__FILE__) + "/../lib"
 
 require 'rubygems'
 require 'test/unit'
-require 'active_support'
-require 'action_pack'
-require 'action_controller'
-require 'action_view'
 require 'action_view/test_case'
-require 'ruby-debug'
-
 require 'simple_table'
 
 class Test::Unit::TestCase
