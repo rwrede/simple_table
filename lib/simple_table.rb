@@ -14,7 +14,7 @@ module SimpleTable
   mattr_accessor :options
   self.options = {
     :alternate_rows => true,
-    :i18n_scope => nil
+    :i18n_scope     => nil
   }
 
   def table_for(collection = [], options = {}, &block)
