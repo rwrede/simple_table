@@ -1,6 +1,9 @@
+$:.unshift File.expand_path('../lib', __FILE__)
+require 'simple_table/version'
+
 Gem::Specification.new do |s|
   s.name         = "simple_table"
-  s.version      = '0.0.3'
+  s.version      = SimpleTable::VERSION
   s.authors      = ["Sven Fuchs", "Raphaela Wrede"]
   s.email        = "raphaela.wrede@gmail.com"
   s.homepage     = "http://github.com/rwrede/simple_table"
