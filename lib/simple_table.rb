@@ -1,15 +1,14 @@
-require 'simple_table/tag'
-require 'simple_table/cell'
-require 'simple_table/row'
-require 'simple_table/rows'
-require 'simple_table/body'
-require 'simple_table/head'
-require 'simple_table/foot'
-require 'simple_table/column'
-require 'simple_table/table'
-
-
 module SimpleTable
+  autoload :Tag,    'simple_table/tag'
+  autoload :Cell,   'simple_table/cell'
+  autoload :Row,    'simple_table/row'
+  autoload :Rows,   'simple_table/rows'
+  autoload :Body,   'simple_table/body'
+  autoload :Head,   'simple_table/head'
+  autoload :Foot,   'simple_table/foot'
+  autoload :Column, 'simple_table/column'
+  autoload :Table,  'simple_table/table'
+
   mattr_accessor :options
   self.options = {
     :alternate_rows => true,
