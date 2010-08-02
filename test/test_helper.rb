@@ -2,8 +2,11 @@ $: << File.dirname(__FILE__) + "/../lib"
 
 require 'rubygems'
 require 'test/unit'
-require 'action_view/test_case'
 require 'simple_table'
+require 'gem_patching'
+require 'active_support'
+require 'action_view'
+require 'action_dispatch/testing/assertions'
 
 class Test::Unit::TestCase
   include ActionDispatch::Assertions::SelectorAssertions

@@ -1,3 +1,5 @@
+require 'active_support/core_ext/class/inheritable_attributes'
+
 module SimpleTable
   class Tag
     class_inheritable_accessor :level, :tag_name

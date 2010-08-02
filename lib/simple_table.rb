@@ -1,3 +1,5 @@
+require 'active_support/core_ext/module/attribute_accessors'
+
 module SimpleTable
   autoload :Tag,    'simple_table/tag'
   autoload :Cell,   'simple_table/cell'
