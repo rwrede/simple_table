@@ -1,6 +1,6 @@
 module SimpleTable
   class Column
-    attr_reader :name, :options
+    attr_reader :name, :table, :options
 
     def initialize(table, name, options = {})
       @table = table
@@ -15,7 +15,7 @@ module SimpleTable
     end
 
     def translate(content)
-      scope = [SimpleTable.options[:i18n_scope], @table.collection_name, :columns].compact
+      scope = [SimpleTable.options[:i18n_scope], table.collection_name, :columns].compact
       I18n.t(content, :scope => scope)
     end
 

@@ -26,13 +26,11 @@ module SimpleTable
 
     def column(*names)
       options = names.last.is_a?(Hash) ? names.pop : {}
-      names.each do |name|
-        @columns << Column.new(self, name, options)
-      end
+      names.each { |name| columns << Column.new(self, name, options) }
     end
 
     def empty(*args, &block)
-      @empty = (args << block).compact
+      @empty ||= (args << block).compact
     end
 
     def row(*args, &block)
@@ -41,33 +39,33 @@ module SimpleTable
 
     def collection_class
       # @collection.first.class.base_class
-      @collection.first.class
+      collection.first.class
     end
 
     def collection_name
-      @collection_name ||= collection_class.name.tableize.gsub('/', '_').gsub('rails_', '')
+      collection_name ||= collection_class.name.tableize.gsub('/', '_').gsub('rails_', '')
     end
 
     def render
-      (@collection.empty? && @empty) ? render_empty : begin
-        column(*collection_attribute_names) if @columns.empty?
+      (collection.empty? && empty) ? render_empty : begin
+        column(*collection_attribute_names) if columns.empty?
         super do |html|
           html << head.render
           html << body.render
-          html << foot.render if @foot && !@foot.empty?
+          html << foot.render if foot && !foot.empty?
         end.gsub(/\n\s*\n/, "\n")
       end
     end
 
     def render_empty
-      @empty.insert(1, @empty.pop.call) if @empty.last.respond_to?(:call)
-      content_tag(*@empty)
+      empty.insert(1, empty.pop.call) if empty.last.respond_to?(:call)
+      content_tag(*empty)
     end
 
     protected
 
       def collection_attribute_names
-        record = @collection.first
+        record = collection.first
         names = record.respond_to?(:attribute_names) ? record.attribute_names : []
         names.map(&:titleize)
       end

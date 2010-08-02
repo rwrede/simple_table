@@ -2,6 +2,8 @@ module SimpleTable
   class Row < Tag
     self.level = 2
     self.tag_name = :tr
+    
+    attr_reader :cells
 
     def initialize(parent, record = nil, options = {}, &block)
       super(parent, options)
@@ -17,12 +19,12 @@ module SimpleTable
       options = contents.last.is_a?(Hash) ? contents.pop : {}
       add_class!(options, current_column_class) if parent.is_a?(Body)
       contents.each do |content|
-        @cells << Cell.new(self, content, options)
+        cells << Cell.new(self, content, options)
       end
     end
 
     def render
-      super(@cells.map(&:render))
+      super(cells.map(&:render))
     end
 
     protected
@@ -33,7 +35,7 @@ module SimpleTable
       end
 
       def current_column_class
-        column = table.columns[@cells.size]
+        column = table.columns[cells.size]
         column && column.options[:class] || ''
       end
   end

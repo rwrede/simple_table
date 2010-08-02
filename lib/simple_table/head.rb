@@ -10,7 +10,7 @@ module SimpleTable
         table.columns.each do |column|
           row.cell(column.content, column.options.reverse_merge(:scope => 'col'))
         end
-        @rows << row
+        rows << row
       end
   end
 end

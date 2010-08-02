@@ -17,10 +17,10 @@ module SimpleTable
       end
 
       def options_for_record(record, ix, options = {})
-        options = options.dup
-        options[:id] = dom_id(record) if record.respond_to?(:new_record?)
-        add_class!(options, 'alternate') if ix % 2 == 1
-        options
+        options.dup.tap do |options|
+          options[:id] = dom_id(record) if record.respond_to?(:new_record?)
+          add_class!(options, 'alternate') if ix % 2 == 1
+        end
       end
   end
 end
