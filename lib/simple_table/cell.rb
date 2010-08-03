@@ -11,7 +11,7 @@ module SimpleTable
     end
 
     def render
-      super(content, true)
+      super(content, !content.html_safe?)
     end
 
     def tag_name
