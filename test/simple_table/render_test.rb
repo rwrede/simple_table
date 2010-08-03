@@ -8,17 +8,21 @@ module SimpleTable
   end
 
   class RenderTest < Test::Unit::TestCase
+    attr_reader :view
+    
     def setup
       articles = [Record.new(1, 'foo'), Record.new(2, 'bar')]
+
       @view = ActionView::Base.new([File.dirname(__FILE__) + '/../fixtures/templates'], { :articles => articles })
       @view.extend(SimpleTable)
+
       SimpleTable.options[:i18n_scope] = :test
       I18n.backend.send :store_translations,
         :en, :test => { :'simple_table_records' => { :columns => { :id => 'ID', :title => 'Title' } } }
     end
 
     def test_render_simple
-      html = @view.render(:file => 'table_simple')
+      html = view.render(:file => 'table_simple')
       assert_html html, 'table[id=simple_table_records][class=simple_table_records list]' do
         assert_select 'thead tr' do
           assert_select 'th[scope=col]', 'ID'
@@ -38,11 +42,11 @@ module SimpleTable
     end
 
     def test_render_auto_body
-      assert_equal @view.render(:file => 'table_simple'), @view.render(:file => 'table_auto_body')
+      assert_equal view.render(:file => 'table_simple'), view.render(:file => 'table_auto_body')
     end
 
     def test_render_auto_columns
-      html = @view.render(:file => 'table_auto_columns')
+      html = view.render(:file => 'table_auto_columns')
       assert_html html, 'table[id=simple_table_records][class=simple_table_records list]' do
         assert_select 'thead tr' do
           assert_select 'th[scope=col]', 'Id'
@@ -62,7 +66,7 @@ module SimpleTable
     end
 
     def test_render_all
-      html = @view.render(:file => 'table_all')
+      html = view.render(:file => 'table_all')
       assert_html html, 'table[id=simple_table_records][class=simple_table_records list]' do
         assert_select 'thead tr' do
           assert_select 'th[colspan=3][class=total]', 'total: 2'
