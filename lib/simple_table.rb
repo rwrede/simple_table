@@ -18,7 +18,6 @@ module SimpleTable
   }
 
   def table_for(collection = [], options = {}, &block)
-    html = Table.new(self, collection, options, &block).render.html_safe
-    concat html
+    Table.new(self, collection, options, &block).render.html_safe
   end
 end
