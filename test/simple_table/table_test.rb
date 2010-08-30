@@ -47,6 +47,22 @@ module SimpleTable
       assert_html table.render, 'tbody tr td[class=foo]', 'bar'
     end
 
+    class ::TestModel
+      attr_accessor :id
+
+      def initialize(attributes={})
+        @id = attributes[:id]
+      end
+    end
+    
+    def test_row_id
+      test_collection = []
+      test_collection << TestModel.new(:id => 1)
+      test_collection << TestModel.new(:id => 2)
+      table = Table.new(nil, test_collection)
+      assert_html table.render, 'tbody tr[id=test_model_1]'
+    end
+
     def test_table_collection_name
       assert_equal 'objects', Table.new(nil, [Object.new]).collection_name
     end
