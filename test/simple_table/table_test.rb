@@ -47,6 +47,40 @@ module SimpleTable
       assert_html table.render, 'tbody tr td[class=foo]', 'bar'
     end
 
+    def test_table_header_cells_get_a_default_header_id
+      table = Table.new(nil, %w(Title))do |table|
+        table.column 'Title'
+       table.row { |row, record, index| row.cell 'some record title' }
+      end
+      assert_html table.render, 'thead tr th[id=title_header]', 'Title'
+    end
+
+    def test_table_header_cells_default_header_id_can_be_overriden_by_adding_an_alternate_id_key_in_the_options_hash
+      table = Table.new(nil, %w(Title))do |table|
+        table.column 'Title', :id => 'some_other_id'
+       table.row { |row, record, index| row.cell 'some record title' }
+      end
+      assert_html table.render, 'thead tr th[id=some_other_id]', 'Title'
+    end
+
+    def test_table_data_cells_get_a_default_headers_attr_representing_their_header_cells
+      table = Table.new(nil, %w(Title))do |table|
+        table.column 'Title'
+       table.row do |row, record, index|
+         row.cell 'some record title'
+       end
+      end
+      assert_html table.render, 'tbody tr td[headers=title_header]', 'some record title'
+    end
+
+    def test_table_data_cells_default_headers_attr_can_be_overridden_by_adding_an_alternate_headers_key_in_the_options_hash
+      table = Table.new(nil, %w(Title))do |table|
+        table.column 'Title'
+       table.row { |row, record, index| row.cell 'some record title', :headers => 'some_other_header' }
+      end
+      assert_html table.render, 'tbody tr td[headers=some_other_header title_header]', 'some record title'
+    end
+
     class ::TestModel
       attr_accessor :id
 
@@ -54,7 +88,7 @@ module SimpleTable
         @id = attributes[:id]
       end
     end
-    
+
     def test_row_id
       test_collection = []
       test_collection << TestModel.new(:id => 1)

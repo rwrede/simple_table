@@ -8,6 +8,7 @@ module SimpleTable
       @value = options.delete(:value)
       @options = options.dup || {}
       @options[:class] ||= name
+      @options[:id] ||= "#{name.to_s.downcase}_header" if name
     end
 
     def content

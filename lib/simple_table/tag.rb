@@ -54,5 +54,12 @@ module SimpleTable
           options[:class] = options[:class].split(' ').push(klass).join(' ')
         end
       end
+
+      def add_header!(options, headers)
+        unless headers.blank?
+          options[:headers] ||= ''
+          options[:headers] = options[:headers].split(' ').push(headers).join(' ')
+        end
+      end
   end
 end
