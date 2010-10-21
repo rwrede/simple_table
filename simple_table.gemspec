@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
   s.require_path = 'lib'
   s.rubyforge_project = '[none]'
 
-  s.add_dependency 'actionpack',    '~> 3.0.0.rc'
-  s.add_dependency 'activesupport', '~> 3.0.0.rc'
+  s.add_dependency 'actionpack',    '~> 3.0.0'
+  s.add_dependency 'activesupport', '~> 3.0.0'
   s.add_development_dependency 'gem_patching'
 end
