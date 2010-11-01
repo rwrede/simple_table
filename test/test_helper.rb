@@ -2,8 +2,10 @@ $: << File.dirname(__FILE__) + "/../lib"
 
 require 'rubygems'
 require 'test/unit'
-require 'simple_table'
-require 'gem_patching'
+require 'bundler/setup'
+
+Bundler.require(:default, :test)
+
 require 'active_support'
 require 'action_view'
 require 'action_dispatch/testing/assertions'
