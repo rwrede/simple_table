@@ -9,7 +9,7 @@ module SimpleTable
       @view = view
       @collection = collection
       @columns = []
-      @collection_name = options.delete(:collection_name)
+      @collection_name = options.delete(:collection_name).to_s if options.key?(:collection_name)
 
       super(nil, options.reverse_merge(:id => collection_name, :class => "#{collection_name} list"))
 
@@ -38,12 +38,11 @@ module SimpleTable
     end
 
     def collection_class
-      # @collection.first.class.base_class
       collection.first.class
     end
 
     def collection_name
-      collection_name ||= collection_class.name.tableize.gsub('/', '_').gsub('rails_', '')
+      @collection_name ||= collection_class.name.tableize.gsub('/', '_').gsub('rails_', '')
     end
 
     def render
