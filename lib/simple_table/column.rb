@@ -17,7 +17,7 @@ module SimpleTable
 
     def translate(content)
       scope = [SimpleTable.options[:i18n_scope], table.collection_name, :columns].compact
-      I18n.t(content, :scope => scope)
+      table.view.t(content, :scope => scope)
     end
 
     def attribute_name

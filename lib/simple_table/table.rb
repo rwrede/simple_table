@@ -3,7 +3,7 @@ module SimpleTable
     self.level = 0
     self.tag_name = :table
 
-    attr_reader :body, :head, :foot, :collection, :columns
+    attr_reader :view, :body, :head, :foot, :collection, :columns
 
     def initialize(view = nil, collection = [], options = {})
       @view = view

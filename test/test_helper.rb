@@ -28,13 +28,17 @@ module SimpleTable
       SimpleTable.options[:i18n_scope] = @scope
     end
 
+    def t(*args)
+      I18n.t(*args)
+    end
+
     def build_column(name, options = {})
       Column.new(nil, name, options)
     end
 
     def build_table(*columns)
       columns = [build_column('foo'), build_column('bar')] if columns.empty?
-      table = Table.new(nil, %w(foo bar))
+      table = Table.new(self, %w(foo bar))
       table.instance_variable_set(:@columns, columns)
       columns.each { |column| column.instance_variable_set(:@table, table) }
       table
