@@ -20,6 +20,13 @@ end
 
 module SimpleTable
   module TableTestHelper
+    class Record
+      attr_reader :id, :title
+      def self.name; 'Record'; end
+      def initialize(id, title); @id = id; @title = title; end
+      def attribute_names; ['id', 'title']; end
+    end
+
     def setup
       @scope = SimpleTable.options[:i18n_scope]
     end
@@ -32,13 +39,17 @@ module SimpleTable
       I18n.t(*args)
     end
 
+    def record(id, title)
+      Record.new(id, title)
+    end
+
     def build_column(name, options = {})
       Column.new(nil, name, options)
     end
 
     def build_table(*columns)
       columns = [build_column('foo'), build_column('bar')] if columns.empty?
-      table = Table.new(self, %w(foo bar))
+      table = Table.new(self, [record(1, 'foo'), record(2, 'bar')])
       table.instance_variable_set(:@columns, columns)
       columns.each { |column| column.instance_variable_set(:@table, table) }
       table

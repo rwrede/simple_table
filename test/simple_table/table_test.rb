@@ -2,13 +2,15 @@ require File.dirname(__FILE__) + "/../test_helper"
 
 module SimpleTable
   class TableTest < Test::Unit::TestCase
+    include TableTestHelper
+
     def test_render_basic
-      table = Table.new(nil, %w(a b))do |table|
+      table = Table.new(nil, [record(1, 'a'), record(2, 'b')])do |table|
         table.column('a'); table.column('b')
-        table.row { |row, record| row.cell(record); row.cell(record) }
+        table.row { |row, record| row.cell(record.title); row.cell(record.title) }
       end
 
-      assert_html table.render, 'table[id=strings][class=strings list]' do
+      assert_html table.render, 'table[id=records][class=records list]' do
         assert_select 'thead tr th[scope=col]', 'a'
         assert_select 'tbody tr td', 'a'
         assert_select 'tbody tr[class=alternate] td', 'b'
@@ -16,12 +18,12 @@ module SimpleTable
     end
 
     def test_render_calling_column_and_cell_shortcuts
-      table = Table.new(nil, %w(a b)) do |table|
+      table = Table.new(nil, [record(1, 'a'), record(2, 'b')]) do |table|
         table.column 'a', 'b'
-        table.row { |row, record| row.cell record, record }
+        table.row { |row, record| row.cell record.title, record.title }
       end
 
-      assert_html table.render, 'table[id=strings][class=strings list]' do
+      assert_html table.render, 'table[id=records][class=records list]' do
         assert_select 'thead tr th[scope=col]', 'a'
         assert_select 'tbody tr td', 'a'
         assert_select 'tbody tr[class=alternate] td', 'b'
@@ -30,7 +32,7 @@ module SimpleTable
 
     def test_block_can_access_view_helpers_and_instance_variables
       @foo = 'foo'
-      table = Table.new(nil, %w(a)) do |table|
+      table = Table.new(nil, [record(1, 'a')]) do |table|
         table.column 'a'
         table.row { |row, record, index| row.cell @foo + bar }
       end
@@ -40,7 +42,7 @@ module SimpleTable
     end
 
     def test_column_html_class_inherits_to_tbody_cells
-      table = Table.new(nil, %w(a))do |table|
+      table = Table.new(nil, [record(1, 'a')])do |table|
         table.column 'a', :class => 'foo'
         table.row { |row, record, index| row.cell 'bar' }
       end

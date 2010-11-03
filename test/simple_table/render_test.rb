@@ -9,16 +9,14 @@ module SimpleTable
 
   class RenderTest < Test::Unit::TestCase
     attr_reader :view
-    
+
     def setup
       articles = [Record.new(1, 'foo'), Record.new(2, 'bar')]
 
       @view = ActionView::Base.new([File.dirname(__FILE__) + '/../fixtures/templates'], { :articles => articles })
       @view.extend(SimpleTable)
 
-      SimpleTable.options[:i18n_scope] = :test
-      I18n.backend.send :store_translations,
-        :en, :test => { :'simple_table_records' => { :columns => { :id => 'ID', :title => 'Title' } } }
+      I18n.backend.store_translations(:en, :columns => { :id => 'ID', :title => 'Title' })
     end
 
     def test_render_simple

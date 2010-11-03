@@ -18,9 +18,9 @@ module SimpleTable
     end
 
     def test_translates_head_cell_content
-      SimpleTable.options[:i18n_scope] = 'foo'
+      I18n.backend.store_translations(:en, :columns => { :foo => 'foo' })
       head = build_table(build_column(:foo)).head
-      assert_html head.render, 'th', 'translation missing: en, foo, strings, columns, foo'
+      assert_html head.render, 'th', 'foo'
     end
 
     def test_head_with_total_row
