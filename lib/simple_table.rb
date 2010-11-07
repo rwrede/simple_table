@@ -1,3 +1,4 @@
+require 'action_view'
 require 'active_support/core_ext/module/attribute_accessors'
 
 module SimpleTable
@@ -21,3 +22,5 @@ module SimpleTable
     Table.new(self, collection, options, &block).render.html_safe
   end
 end
+
+ActionView::Base.send(:include, SimpleTable)

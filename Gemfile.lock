@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    simple_table (0.0.5)
+    simple_table (0.0.10)
       actionpack (~> 3.0.0)
       activesupport (~> 3.0.0)
 
