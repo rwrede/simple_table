@@ -58,7 +58,7 @@ module SimpleTable
 
     def render_empty
       empty.insert(1, empty.pop.call) if empty.last.respond_to?(:call)
-      content_tag(*empty)
+      empty.empty? ? '' : content_tag(*empty)
     end
 
     protected
