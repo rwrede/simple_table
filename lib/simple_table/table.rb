@@ -12,15 +12,13 @@ module SimpleTable
       @collection_name = options.delete(:collection_name).to_s if options.key?(:collection_name)
 
       super(nil, options.reverse_merge(:id => collection_name, :class => "#{collection_name} list"))
-
-      yield(self) if block_given?
     end
 
     ['head', 'body', 'foot'].each do |name|
       class_eval <<-code
-        def #{name}                                # def head
-          @#{name} ||= #{name.classify}.new(self)  #   @head ||= Head.new(self)
-        end                                        # end
+        def #{name}(*args, &block)                                # def head(*args, &block)
+          @#{name} ||= #{name.classify}.new(self, *args, &block)  #   @head ||= Head.new(self, *args, &block)
+        end                                                       # end
       code
     end
 

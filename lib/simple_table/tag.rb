@@ -11,6 +11,7 @@ module SimpleTable
     def initialize(parent = nil, options = {})
       @parent = parent
       @options = options
+      yield self if block_given?
     end
 
     def collection_class

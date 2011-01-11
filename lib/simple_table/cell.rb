@@ -6,6 +6,7 @@ module SimpleTable
       super(parent, options)
       @content = content
       options[:colspan] = table.columns.size if options[:colspan] == :all
+      yield self if block_given?
     end
 
     def content

@@ -5,8 +5,8 @@ module SimpleTable
     attr_reader :rows
 
     def initialize(parent, options = {})
-      super
       @rows = []
+      super
     end
 
     def empty?

@@ -6,11 +6,9 @@ module SimpleTable
     attr_reader :cells
 
     def initialize(parent, record = nil, options = {}, &block)
-      super(parent, options)
-
       @parent = parent
+      @options = options
       @cells = []
-      @block = block
 
       yield(*[self, record].compact) if block_given?
     end
