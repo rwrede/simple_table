@@ -2,12 +2,14 @@ module SimpleTable
   class Cell < Tag
     self.level = 3
 
-    attr_reader :content
-
     def initialize(parent, content = nil, options = {})
       super(parent, options)
       @content = content
       options[:colspan] = table.columns.size if options[:colspan] == :all
+    end
+
+    def content
+      table.view && @content.is_a?(Symbol) ? table.view.t(@content) : @content
     end
 
     def render
