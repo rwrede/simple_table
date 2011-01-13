@@ -18,7 +18,7 @@ module SimpleTable
     end
 
     def tag_name
-      parent.head? ? :th : :td
+      options[:tag_name] || parent.head? ? :th : :td
     end
   end
 end
