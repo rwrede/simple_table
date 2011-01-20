@@ -20,7 +20,7 @@ module SimpleTable
     def test_translates_cell_contents_when_symbol
       body = build_table.body
       body.row { |r, item| r.cell :foo }
-      assert_html body.render, 'td', 'translation missing: en, foo'
+      assert_html body.render, 'td', 'translation missing: en.foo'
     end
 
     protected
