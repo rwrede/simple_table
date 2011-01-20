@@ -3,14 +3,13 @@ module SimpleTable
     self.level = 2
     self.tag_name = :tr
 
-    attr_reader :cells
+    attr_reader :cells, :block
 
     def initialize(parent, record = nil, options = {}, &block)
       @parent = parent
       @options = options
       @cells = []
-
-      yield(*[self, record].compact) if block_given?
+      @block = block
     end
 
     def cell(*contents)
@@ -24,11 +23,18 @@ module SimpleTable
       end
     end
 
-    def render
+    def render(record = nil, options = {})
+      @options.merge!(options)
+      build(record) if block
       super(cells.map(&:render))
     end
 
     protected
+
+      def build(record)
+        @cells = []
+        block.call(*[self, record].compact)
+      end
 
       def alternate(options)
         options[:class] ||= ''

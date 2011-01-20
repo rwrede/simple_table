@@ -2,10 +2,13 @@ module SimpleTable
   class Body < Rows
     self.tag_name = :tbody
 
-    def row(options = {}, &block)
-      table.collection.each_with_index do |record, ix|
-        super(record, options_for_record(record, ix, options))
-      end
+    def render
+      build
+      super(''.tap do |html|
+        table.collection.each_with_index do |record, ix|
+          html << rows.map { |row| row.render(record, options_for_record(record, ix, options)) }.join
+        end
+      end)
     end
 
     protected

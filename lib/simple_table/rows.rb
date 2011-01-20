@@ -17,10 +17,5 @@ module SimpleTable
       options = args.extract_options!
       rows << Row.new(self, args.shift, options, &block)
     end
-
-    def render
-      build if respond_to?(:build)
-      super(rows.map(&:render))
-    end
   end
 end

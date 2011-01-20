@@ -3,6 +3,11 @@ module SimpleTable
     self.level = 1
     self.tag_name = :thead
 
+    def render(*args)
+      build
+      super(rows.map { |row| row.render(*args) })
+    end
+
     protected
 
       def build

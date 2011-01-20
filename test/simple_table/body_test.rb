@@ -13,6 +13,19 @@ module SimpleTable
       end
     end
 
+    def test_multiple_rows
+      body = build_table.body
+      body.row { |row, record| row.cell('row 1') }
+      body.row { |row, record| row.cell('row 2') }
+
+      assert_html body.render, 'tbody' do
+        assert_select 'tr:nth-child(1) td', 'row 1'
+        assert_select 'tr:nth-child(2) td', 'row 2'
+        assert_select 'tr:nth-child(3) td', 'row 1'
+        assert_select 'tr:nth-child(4) td', 'row 2'
+      end
+    end
+
     def test_cell_html_options
       body = build_table.body
       body.row { |row, record| row.cell(record.title, :class => 'baz') }
