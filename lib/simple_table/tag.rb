@@ -52,14 +52,14 @@ module SimpleTable
       def add_class!(options, klass)
         unless klass.blank?
           options[:class] ||= ''
-          options[:class] = options[:class].split(' ').push(klass).join(' ')
+          options[:class] = options[:class].to_s.split(' ').push(klass).join(' ')
         end
       end
 
       def add_header!(options, headers)
         unless headers.blank?
           options[:headers] ||= ''
-          options[:headers] = options[:headers].split(' ').push(headers).join(' ')
+          options[:headers] = options[:headers].to_s.split(' ').push(headers).join(' ')
         end
       end
   end
