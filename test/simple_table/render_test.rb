@@ -11,7 +11,7 @@ module SimpleTable
     attr_reader :view
 
     def setup
-      articles = [Record.new(1, 'foo'), Record.new(2, 'bar')]
+      articles = [Record.new(1, 'foo'), Record.new(2, 'bar'), Record.new(3, 'baz')]
 
       @view = ActionView::Base.new([File.dirname(__FILE__) + '/../fixtures/templates'], { :articles => articles })
       @view.extend(SimpleTable)
@@ -27,13 +27,17 @@ module SimpleTable
           assert_select 'th[scope=col]', 'Title'
         end
         assert_select 'tbody' do
-          assert_select 'tr' do
+          assert_select 'tr:not([class=alternate])' do
             assert_select 'td', '1'
             assert_select 'td', 'foo'
           end
           assert_select 'tr[class=alternate]' do
             assert_select 'td', '2'
             assert_select 'td', 'bar'
+          end
+          assert_select 'tr:not([class=alternate])' do
+            assert_select 'td', '3'
+            assert_select 'td', 'baz'
           end
         end
       end
@@ -67,7 +71,7 @@ module SimpleTable
       html = view.render(:file => 'table_all')
       assert_html html, 'table[id=simple_table_records][class=simple_table_records list]' do
         assert_select 'thead tr' do
-          assert_select 'th[colspan=3][class=total]', 'total: 2'
+          assert_select 'th[colspan=3][class=total]', 'total: 3'
         end
         assert_select 'thead tr' do
           assert_select 'th[scope=col]', 'ID'
