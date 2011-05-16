@@ -27,6 +27,12 @@ module SimpleTable
       names.each { |name| columns << Column.new(self, name, options) }
     end
 
+    # Usage:
+    #   table_for collection do |t|
+    #    t.empty :div, :class => 'no-items' do
+    #      "everything sold out, mam"
+    #    end
+    #   end
     def empty(*args, &block)
       @empty ||= (args << block).compact
     end
