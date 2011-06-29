@@ -28,7 +28,8 @@ module SimpleTable
 
       def options_for_record(record, ix, options = {})
         options.dup.tap do |options|
-          options[:id] = "#{table.collection_name.singularize}_#{record.id}"
+          record_id = record.is_a?(ActiveRecord::Base) ? record.id : record.object_id
+          options[:id] = "#{table.collection_name.singularize}_#{record_id}"
           add_class!(options, 'alternate') if (ix % 2 == 1)
         end
       end

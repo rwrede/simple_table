@@ -93,10 +93,29 @@ module SimpleTable
 
     def test_row_id
       test_collection = []
-      test_collection << TestModel.new(:id => 1)
-      test_collection << TestModel.new(:id => 2)
+      test_model_1 = TestModel.new(:id => 1)
+      test_model_2 = TestModel.new(:id => 2)
+      test_collection << test_model_1 << test_model_2
       table = Table.new(nil, test_collection)
-      assert_html table.render, 'tbody tr[id=test_model_1]'
+
+      assert_html table.render, "tbody tr[id=test_model_#{test_model_1.object_id}]"
+      assert_html table.render, "tbody tr[id=test_model_1]", :count => 0
+      assert_html table.render, "tbody tr[id=test_model_#{test_model_2.object_id}]"
+      assert_html table.render, "tbody tr[id=test_model_2]", :count => 0
+    end
+
+    def test_row_id_for_active_record_collection
+      TestModel.any_instance.expects(:is_a?).at_least_once.with(ActiveRecord::Base).returns(true)
+      test_collection = []
+      test_model_1 = TestModel.new(:id => 1)
+      test_model_2 = TestModel.new(:id => 2)
+      test_collection << test_model_1 << test_model_2
+      table = Table.new(nil, test_collection)
+
+      assert_html table.render, "tbody tr[id=test_model_1]"
+      assert_html table.render, "tbody tr[id=test_model_#{test_model_1.object_id}]", :count => 0
+      assert_html table.render, "tbody tr[id=test_model_2]"
+      assert_html table.render, "tbody tr[id=test_model_#{test_model_2.object_id}]", :count => 0
     end
 
     def test_table_collection_name
