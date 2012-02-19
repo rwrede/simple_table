@@ -1,10 +1,8 @@
-require 'active_support/core_ext/class/inheritable_attributes'
-
 module SimpleTable
   class Tag
     include ActionView::Helpers::TagHelper
 
-    class_inheritable_accessor :level, :tag_name
+    class_attribute :level, :tag_name
 
     attr_reader :options, :parent
 
