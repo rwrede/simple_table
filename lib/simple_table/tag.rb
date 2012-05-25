@@ -31,6 +31,7 @@ module SimpleTable
     end
 
     def render(content = nil, escape = false)
+      content = content.join(' ') if content.respond_to?(:join)
       yield(content = '') if content.nil? && block_given?
       content = lf(indent(content.to_s))
       lf(content_tag(tag_name, content, options, escape))
