@@ -1,0 +1,45 @@
+#!/bin/bash
+
+# here we go
+export CI=true
+
+RUBY='ruby-1.9.3-p194'
+GEMSET='simple_table'
+APP_DIR=`pwd`
+
+
+echo "--- setting up the test-environment"
+
+# Install RVM
+rvmrc="$HOME/.rvmrc"
+cat >> $rvmrc <<-EORC
+rvm_install_on_use_flag=1
+EORC
+sort -u -o $rvmrc $rvmrc
+
+# remove remotely removed branches
+git remote prune origin
+
+# remove files not under versioncontrol
+git clean -fdx
+
+test -f "$HOME/.rvm/scripts/rvm" ||
+  curl -L https://get.rvm.io | bash -s stable || exit 1024
+
+source "$HOME/.rvm/scripts/rvm" || exit 512
+
+rvm use $RUBY@$GEMSET --create || ( rvm install $RUBY && rvm use $RUBY@$GEMSET --create) || exit 256
+echo "--- test-environment is set up"
+
+
+echo "--- bundling"
+which bundle || gem install bundler -v 1.0.21 --no-ri --no-rdoc || exit 128
+# run bundle install only if bundle check misses something
+# taking out the --relock as we don't change the Gemfile.lock
+bundle check || bundle install || exit 64
+echo "--- bundling finished"
+
+echo "--- tests"
+ruby test/all.rb
+echo "--- tests done"
+
