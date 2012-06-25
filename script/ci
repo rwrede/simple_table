@@ -3,7 +3,7 @@
 # here we go
 export CI=true
 
-RUBY='ruby-1.9.3-p194'
+RUBY='ruby-1.8.7-p352'
 GEMSET='simple_table'
 APP_DIR=`pwd`
 
